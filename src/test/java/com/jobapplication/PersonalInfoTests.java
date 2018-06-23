@@ -54,7 +54,7 @@ public class PersonalInfoTests {
 		driver.get("https://forms.zohopublic.com/murodil/form/JobApplicationForm/formperma/kOqgtfkv1dMJ4Df6k4_mekBNfNLIconAHvfdIk3CJSQ");	
 		firstName = data.name().firstName();
 		lastName = data.name().lastName();
-		gender = random.nextInt(2)+1;
+		gender = data.number().numberBetween(1,3);
 		dateOfBirth = data.date().birthday().toString();
 		email = "murodil_ruz@yahoo.com";
 		phoneNumber = data.phoneNumber().cellPhone();
