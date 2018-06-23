@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -83,6 +84,34 @@ public class PersonalInfoTests {
 		certifications.add("AWS");
 		additionalSkills = data.job().keySkills();
 		
+	}
+	
+	@Test
+	public void submitFullApplication() {
+		driver.findElement(By.xpath("//input[@name='Name_First']")).sendKeys(firstName);
+		driver.findElement(By.xpath("//input[@name='Name_Last']")).sendKeys(lastName);
+		setGender(gender);
+		setDateOfBirth(dateOfBirth);
+		driver.findElement(By.xpath("//input[@name='Email']")).sendKeys(email);
+		driver.findElement(By.xpath("//input[@name='countrycode']")).sendKeys(phoneNumber);
+		driver.findElement(By.xpath("//input[@name='Address_City']")).sendKeys(city);
+		driver.findElement(By.xpath("//input[@name='Address_Region']")).sendKeys(state);
+		Select countryElem = new Select(driver.findElement(By.xpath("//select[@id='Address_Country']")));
+		countryElem.selectByIndex(data.number().numberBetween(1, countryElem.getOptions().size()));
+	}
+	//Sun Nov 27 04:04:22 EST 1977
+	public void setDateOfBirth(String bday) {
+		String[] pieces = bday.split(" ");
+		String birthDay = pieces[2] + "-" +  pieces[1] + "-" + pieces[5];
+		driver.findElement(By.xpath("//input[@id='Date-date']")).sendKeys(birthDay);
+	}
+	
+	public void setGender(int n) {
+		if(n==1) {
+			driver.findElement(By.xpath("//input[@value='Male']")).click();
+		}else {
+			driver.findElement(By.xpath("//input[@value='Female']")).click();
+		}
 	}
 	
 	@Test
