@@ -104,6 +104,39 @@ public class PersonalInfoTests {
 		verifySalaryCalculations(annualSalary);
 		driver.findElement(By.xpath("//em[.=' Next ']")).click();
 		
+		// SECOND PAGE ACTIONS
+		setSkillset(technologies);
+		
+	}
+	
+	public void setSkillset(List<String> tech) {
+		
+		for (String skill : tech) {
+			String technology = skill.substring(0, skill.length()-2);
+			int rate = Integer.parseInt(skill.substring(skill.length()-1));
+			
+			String level = "";
+			
+			switch(rate) {
+				case 1:
+					level = "Expert";
+					break;
+				case 2:
+					level = "Proficient";
+					break;
+				case 3:
+					level = "Beginner";
+					break;
+				default:
+					fail(rate + " is not a valid level");
+			}
+			
+			String xpath = "//input[@rowvalue='"+ technology +"' and @columnvalue='"+ level +"']";
+			driver.findElement(By.xpath(xpath)).click();
+			
+		}
+		
+		
 	}
 	
 	public void verifySalaryCalculations(int annual) {
