@@ -1,11 +1,13 @@
 package com.jobapplication;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -98,14 +100,33 @@ public class PersonalInfoTests {
 		driver.findElement(By.xpath("//input[@name='Address_Region']")).sendKeys(state);
 		Select countryElem = new Select(driver.findElement(By.xpath("//select[@id='Address_Country']")));
 		countryElem.selectByIndex(data.number().numberBetween(1, countryElem.getOptions().size()));
+		driver.findElement(By.xpath("//input[@name='Number']")).sendKeys(String.valueOf(annualSalary)+Keys.TAB);
+		verifySalaryCalculations(annualSalary);
+		driver.findElement(By.xpath("//em[.=' Next ']")).click();
+		
 	}
-	//Sun Nov 27 04:04:22 EST 1977
+	
+	public void verifySalaryCalculations(int annual) {
+		String monthly = driver.findElement(By.xpath("//input[@name='Formula']")).getAttribute("value");
+		String weekly = driver.findElement(By.xpath("//input[@name='Formula1']")).getAttribute("value");
+		String hourly =  driver.findElement(By.xpath("//input[@name='Formula2']")).getAttribute("value");
+		
+		System.out.println(monthly);
+		System.out.println(weekly);
+		System.out.println(hourly);
+		
+		DecimalFormat formatter = new DecimalFormat("#.##");
+		
+		assertEquals(Double.parseDouble(monthly),Double.parseDouble(formatter.format((double)annual /12.0)));
+		assertEquals(Double.parseDouble(weekly),Double.parseDouble(formatter.format((double)annual / 52.0)));
+		assertEquals(Double.parseDouble(hourly),Double.parseDouble(formatter.format((double)annual / 52.0 / 40.0)));
+	}
+	
 	public void setDateOfBirth(String bday) {
 		String[] pieces = bday.split(" ");
 		String birthDay = pieces[2] + "-" +  pieces[1] + "-" + pieces[5];
 		driver.findElement(By.xpath("//input[@id='Date-date']")).sendKeys(birthDay);
 	}
-	
 	public void setGender(int n) {
 		if(n==1) {
 			driver.findElement(By.xpath("//input[@value='Male']")).click();
