@@ -60,7 +60,7 @@ public class PersonalInfoTests {
 		gender = data.number().numberBetween(1,3);
 		dateOfBirth = data.date().birthday().toString();
 		email = "murodil_ruz@yahoo.com";
-		phoneNumber = data.phoneNumber().cellPhone();
+		phoneNumber = data.phoneNumber().cellPhone().replace(".", "");
 		city=data.address().cityName();
 		state=data.address().stateAbbr();
 		country=data.address().country();
@@ -106,6 +106,11 @@ public class PersonalInfoTests {
 		
 		// SECOND PAGE ACTIONS
 		setSkillset(technologies);
+		if(yearsOfExperience > 0) {
+			driver.findElement(By.xpath("//a[@rating_value='"+ yearsOfExperience +"']")).click();
+		}
+		Select educationList = new Select(driver.findElement(By.xpath("//select[@name='Dropdown']")));
+		educationList.selectByIndex(data.number().numberBetween(1, educationList.getOptions().size()));
 		
 	}
 	
