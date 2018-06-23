@@ -1,5 +1,6 @@
 package com.jobapplication;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -14,6 +15,22 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class PersonalInfoTests {
 	WebDriver driver;
+	String firstName;
+	String lastName;
+	String gender;
+	String dateOfBirth;
+	String email;
+	String phoneNumber;
+	String city;
+	String state;
+	String country;
+	int annualSalary;
+	List<String> technologies;
+	int yearsOfExperience;
+	String education;
+	String github;
+	List<String> certifications;
+	String additionalSkills;
 	
 	@BeforeClass //runs once for all tests
 	public void setUp() {
@@ -37,15 +54,10 @@ public class PersonalInfoTests {
 		
 		driver.findElement(By.xpath("//input[@elname='first']")).clear();	
 		driver.findElement(By.xpath("//*[@elname='last']")).clear();
-		//<em> Next </em>
+
 		driver.findElement(By.xpath("//em[.=' Next ']")).click();
-		//write xpath with tagname + id 
-		//get the text and assert text equals to Enter a value for this field.
-//		<p class="errorMessage" elname="error" id="error-Name"
-//				style="display: block;">Enter a value for this field.</p>
+
 		String nameError = driver.findElement(By.xpath("//p[@id='error-Name']")).getText();
 		assertEquals(nameError, "Enter a value for this field.");
-
 	}
-	
 }	
