@@ -75,8 +75,31 @@ public class WebElements {
 		assertEquals(radioButtons.size(),9,"Message will show if it fails");
 		assertEquals(buttons.size(),1,"Message will show if it fails");
 		
-		
+		/*
+		 * Homework:
+		 * 	Loop through each inputbox and enter random names
+		 *  Loop through each dropDown and randomly select by index
+		 *  Loop through each checkBoxes and select each one
+		 *  Loop through each radioButton and click one by one by waiting one second intervals
+		 *  click all buttons
+		 */
+	}
 	
+	@Test
+	public void slideShow() throws InterruptedException {
+		driver.get("https://www.hbloom.com/Gifts/birthday-flowers");
+		List<WebElement> images = driver.findElements(By.tagName("img"));
+		List<String> srcs = new ArrayList<>();
+		
+		for(WebElement flower: images) {
+			srcs.add(flower.getAttribute("src"));
+		}
+		
+		for (String link : srcs) {
+			driver.get(link);
+			Thread.sleep(1234);
+		}
+		
 	}
 	
 	
