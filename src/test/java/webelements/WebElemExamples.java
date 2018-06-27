@@ -23,7 +23,7 @@ public class WebElemExamples {
 			System.out.println("Setting up WebDriver in BeforeClass...");
 			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			driver.manage().window().fullscreen();
 		}
 		
@@ -64,8 +64,6 @@ public class WebElemExamples {
 			//driver.findElement(By.xpath("//em[.=' Next ']")).click();
 			
 			cSalary.sendKeys("123456");
-			
-			
 			
 			
 		}
