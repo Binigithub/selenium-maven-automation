@@ -1,5 +1,7 @@
 package webelements;
 
+import static org.testng.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -49,7 +51,33 @@ public class WebElements {
 	    
 	    System.out.println(linkNames.toString());
 	}
+	/**
+	 * navigate to https://forms.zohopublic.com/murodil/form/SeleniumWebElements/formperma/eCecYgX4WMcmjxvXVq6UdhA2ABXIoqPAxnAF8H8CCJg
+	 * Find all input boxes and assign to List of webelements -> 2
+	 * Find all drop down boxes and assign to another List of webelements -> 3
+	 * Find all check boxes and assign to another List of webelements -> 9
+	 * Find all radio boxes and assign to another List of webelements -> 9
+	 * Find all buttons and assign to another List of webelements -> 1
+	 * assert each one's count
+	 */
+	@Test
+	public void SeleniumWebElementsForm() {
+		driver.navigate().to("https://forms.zohopublic.com/murodil/form/SeleniumWebElements/formperma/eCecYgX4WMcmjxvXVq6UdhA2ABXIoqPAxnAF8H8CCJg");
+		List<WebElement> inputBoxes = driver.findElements(By.xpath("//input[@type='text']"));
+		List<WebElement> dropDowns = driver.findElements(By.tagName("select"));
+		List<WebElement> checkBoxes = driver.findElements(By.xpath("//input[@type='checkbox']"));
+		List<WebElement> radioButtons = driver.findElements(By.xpath("//input[@type='radio']"));
+		List<WebElement> buttons = driver.findElements(By.tagName("button"));
+		
+		assertEquals(inputBoxes.size(),2);
+		assertEquals(dropDowns.size(),3);
+		assertEquals(checkBoxes.size(),9);
+		assertEquals(radioButtons.size(),9,"Message will show if it fails");
+		assertEquals(buttons.size(),1,"Message will show if it fails");
+		
+		
 	
+	}
 	
 	
 }
