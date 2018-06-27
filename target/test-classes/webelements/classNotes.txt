@@ -1,0 +1,108 @@
+06/26/2018
+----------
+
+WebElement
+FindElements
+Assert vs Verify
+SoftAssertions
+=================
+
+WebElement -> its an interface that comes from selenium.
+org.openqa.selenium.WebElement
+
+driver.findElement(By.linkText("code")).click();
+
+           String        String       String   int
+int l = str.toLowerCase().toUpperCase().trim().length();
+     boolean
+str.isEmpty();
+
+List<String> names .....
+             String  int
+int l = name.get(0).indexOf('a');
+
+
+          WebElement
+driver.findElement(By.linkText("code")).click();
+
+HTML Element ->
+  <html>
+    <body> <p>This is text</p> </body>
+
+  </html>
+
+When you talk about selenium, Selenum treats each HTML element
+as a WebElement
+
+driver.findElement(By.linkText("code")).click();
+
+WebElement link = driver.findElement(By.linkText("code"));
+link.click();
+
+String t = link.getText();
+boolean b=  link.isEnabled();
+link.click();
+==========
+
+org.openqa.selenium.StaleElementReferenceException: stale element reference:
+element is not attached to the page document
+
+You get this exception whenever you find the element First
+then you navigate away from the page and
+try to do action on the element again.
+
+//em[.=' Next ']
+//em[text()=' Next ']
+
+em -> tag of the element
+. -> is a visible text of element
+============
+
+FINDELEMENTS
+  -> Find all matching WebElements
+  ex:
+    List<WebElement> links = driver.findElements(By.tagName("a"));
+    List<WebElement> links = driver.findElements(By.xpath("//a"));
+
+each link on the html page has a tagname 'a'
+
+<a href="where to go">LinkText</a>
+
+Sometimes, in automation testing , you will need to work with
+multiple similar elements.
+
+ex: you have 10 links on the page that you need to verify
+they exist and text is as expected.
+
+List<WebElement> links = driver.findElements(By.tagName("a"));
+find all elements that have tag a.
+
+List<WebElement> elems = driver.findElements(By.className("abc"));
+find all elements that have classname as abc
+
+assertEquals(elems.size(), 10);
+===================================
+driver.findElement(By.className("abc"));
+          VS
+driver.findElements(By.className("abc"));
+
+FINDELEMENT VS FINDELEMENTS
+
+FINDELEMENT:
+  1) When there is no match:
+    -> will throw NoSuchElementException
+  2) When there is one single match:
+    -> it will return that one
+  3) When there are multiple matches:
+    -> it will return first one in HTML order(DOM structure)
+
+FINDELEMENTS:
+  1) When there is no match:
+    -> will return empty LIST
+  2) When there is one single match:
+    -> will return a list with one single WebElement
+  3) When there are multiple matches:
+    -> will return a list with all matching WebElements
+
+FINDELEMENT is affected by implicit wait time.
+FINDELEMENTS is NOT affected by implicit wait time.
