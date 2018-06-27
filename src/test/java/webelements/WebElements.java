@@ -1,5 +1,6 @@
 package webelements;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -38,9 +39,17 @@ public class WebElements {
 	    		}
 	    }
 	    //add each link text into a list of Strings
+	    List<String> linkNames = new ArrayList<>();
 	    
+	    for (WebElement link : links) {
+			if(!link.getText().isEmpty()) {
+				linkNames.add(link.getText());
+			}
+		}
 	    
-	    
+	    System.out.println(linkNames.toString());
 	}
+	
+	
 	
 }
