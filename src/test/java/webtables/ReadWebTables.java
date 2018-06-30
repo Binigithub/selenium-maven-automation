@@ -77,11 +77,7 @@ public class ReadWebTables {
 			System.out.println();
 		}
 		
-		
-		//
-		
 		softAssert.assertAll();
-		
 		
 	}
 	
