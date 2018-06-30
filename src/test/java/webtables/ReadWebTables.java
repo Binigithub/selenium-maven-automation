@@ -83,5 +83,29 @@ public class ReadWebTables {
 		
 	}
 	
+	@Test
+	public void applicantsData() {
+		driver.get("https://forms.zohopublic.com/murodil/report/Applicants/reportperma/DibkrcDh27GWoPQ9krhiTdlSN4_34rKc8ngubKgIMy8");
+		
+		printTableData("reportTab");
+	
+	}
+	
+	public void printTableData(String id) {
+		int rowsCount = driver.findElements(By.xpath("//table[@id='"+id+"']/tbody/tr")).size();
+		int colsCount = driver.findElements(By.xpath("//table[@id='"+id+"']/thead/tr/th")).size();
+		
+		System.out.println("===============");
+		
+		for(int rowNum = 1; rowNum <= rowsCount; rowNum++) {
+			for(int col = 1; col <= colsCount; col++) {
+				String xpath = "//table[@id='"+id+"']/tbody/tr["+rowNum+"]/td["+col+"]";
+				String tdData = driver.findElement(By.xpath(xpath)).getText();
+				System.out.print(tdData +"  \t");
+			}
+			System.out.println();
+		}
+	}
+	
 
 }
