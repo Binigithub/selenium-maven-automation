@@ -1,5 +1,7 @@
 package webtables;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -9,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -42,9 +45,43 @@ public class ReadWebTables {
 		//use a loop to print out
 		String headerPath  = "//table[@id='worldcup']/thead/tr/th";
 		List<WebElement> headers = driver.findElements(By.xpath(headerPath));
+		
+		List<String> expHeaders = Arrays.asList("Team1","Score","Team2");
+		List<String> actHeaders = new ArrayList<>();
+		
 		for (WebElement h : headers) {
-			System.out.println(h.getText());
+			actHeaders.add(h.getText());
 		}
+		
+		SoftAssert softAssert = new SoftAssert();
+		
+		softAssert.assertEquals(actHeaders, expHeaders);
+		
+		//write xpath and findelement gettext -> needs to print Egypt
+		String egptPath = "//table[@id = 'worldcup']/tbody/tr[3]/td[3]";
+		softAssert.assertEquals(driver.findElement(By.xpath(egptPath)).getText(),"Egypt");
+		
+		//loop it and print all data
+		//get number of rows, columns then nested loop
+		int rowsCount = driver.findElements(By.xpath("//table[@id='worldcup']/tbody/tr")).size();
+		int colsCount = driver.findElements(By.xpath("//table[@id='worldcup']/thead/tr/th")).size();
+		
+		System.out.println("===============");
+		
+		for(int rowNum = 1; rowNum <= rowsCount; rowNum++) {
+			for(int col = 1; col <= colsCount; col++) {
+				String xpath = "//table[@id='worldcup']/tbody/tr["+rowNum+"]/td["+col+"]";
+				String tdData = driver.findElement(By.xpath(xpath)).getText();
+				System.out.print(tdData +"  \t");
+			}
+			System.out.println();
+		}
+		
+		
+		//
+		
+		softAssert.assertAll();
+		
 		
 	}
 	
