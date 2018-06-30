@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -52,6 +53,7 @@ public class PrintAllProductDetails {
 		
 		
 		for (int i = 0; i < wholeItems.size(); i++) {
+			
 			if(wholeItems.get(i).getText().isEmpty()) continue;
 			
 			String desXpath = "(//div[@class='s-item-container'])[" + (i+1) + "]//h2";
