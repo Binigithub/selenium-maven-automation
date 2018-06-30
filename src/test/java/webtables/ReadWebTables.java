@@ -101,7 +101,7 @@ public class ReadWebTables {
 			for(int col = 1; col <= colsCount; col++) {
 				String xpath = "//table[@id='"+id+"']/tbody/tr["+rowNum+"]/td["+col+"]";
 				String tdData = driver.findElement(By.xpath(xpath)).getText();
-				System.out.print(tdData +"  \t");
+				System.out.print(tdData +"--");
 			}
 			System.out.println();
 		}
