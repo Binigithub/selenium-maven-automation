@@ -16,5 +16,7 @@ public class ProductsPage {
 	@FindBy(xpath="//table[@class='ProductsTable']/tbody/tr/td[1]")
 	public List<WebElement> productNames;
 	
+	@FindBy(xpath="//table[@class='ProductsTable']/tbody/tr")
+	public List<WebElement> productsRows;
 	
 }

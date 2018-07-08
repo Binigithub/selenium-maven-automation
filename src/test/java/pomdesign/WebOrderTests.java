@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -94,12 +95,38 @@ public class WebOrderTests {
 		}
 		assertEquals(actProducts,expProducts);
 		
+		for (WebElement row : productsPage.productsRows) {
+
+			System.out.println(row.getText());
+			String[] prodData = row.getText().split(" ");
+			switch(prodData[0]) {
+				case "MyMoney":
+					assertEquals(prodData[1],"$100");
+					assertEquals(prodData[2],"8%");
+					break;
+				case "FamilyAlbum":
+					assertEquals(prodData[1],"$80");
+					assertEquals(prodData[2],"15%");
+					break;
+				case "ScreenSaver":
+					assertEquals(prodData[1],"$20");
+					assertEquals(prodData[2],"10%");
+					break;		
+			}
+			
+		}
+		
 	} 
 	
 	//logout after each test
 	@AfterMethod
 	public void logout() {
 		allOrdersPage.logout();
+	}
+	
+	@AfterClass
+	public void tearDown() {
+		driver.quit();
 	}
 	
 }
