@@ -3,9 +3,13 @@ package pomdesign;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -14,12 +18,14 @@ import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import pages.AllOrdersPage;
+import pages.ProductsPage;
 import pages.WebOrdersLoginPage;
 
 public class WebOrderTests {
 	WebDriver driver;
 	WebOrdersLoginPage loginPage;
 	AllOrdersPage allOrdersPage;
+	ProductsPage productsPage;
 	String userId = "Tester";
 	String password = "test";
 	
@@ -55,11 +61,45 @@ public class WebOrderTests {
 		assertTrue(allOrdersPage.orderTab.isDisplayed(),"orderTab is not displayed");
 	}
 	
+	/*
+	 *  Step 1. Navigate to loginpage
+		Step 2. Assert that you are on loginpage
+		Step 3. Login using valid credentials
+		Step 4. Click on view all products
+		Step 5. Verify following products are displayed:
+				MyMoney
+				FamilyAlbum
+				ScreenSaver
+
+		Step 6. Verify prices and discounts :
+				MyMoney	    $100 8%
+				FamilyAlbum	$80	15%
+				ScreenSaver	$20	10%
+	 */
+	@Test(description="Verify default Products and prices")
+	public void availableProductsTest() {
+		assertEquals(driver.getTitle(),"Web Orders Login","LoginPage is not displayed. Application is down.");
+		loginPage.login(userId, password);
+		allOrdersPage = new AllOrdersPage(driver);
+		allOrdersPage.viewAllProducts.click();
+		productsPage = new ProductsPage(driver);
+		List<String> expProducts = Arrays.asList("MyMoney","FamilyAlbum","ScreenSaver");
+		List<String> actProducts = new ArrayList<>();		
+		
+//		productsPage.productNames.forEach(
+//				elem -> actProducts.add(elem.getText())
+//		);
+		for(WebElement prod : productsPage.productNames) {
+			actProducts.add(prod.getText());
+		}
+		assertEquals(actProducts,expProducts);
+		
+	} 
+	
 	//logout after each test
 	@AfterMethod
 	public void logout() {
 		allOrdersPage.logout();
 	}
-	
 	
 }
