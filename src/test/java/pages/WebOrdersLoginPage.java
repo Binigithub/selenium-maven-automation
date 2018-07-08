@@ -26,4 +26,10 @@ public class WebOrdersLoginPage {
 	@FindBy(id="ctl00_MainContent_status")
 	public WebElement invalidUserNameErrMsg;
 	
+	public void login(String uid, String pwd) {
+		userName.sendKeys(uid);
+		password.sendKeys(pwd);
+		loginButton.click();
+	}
+	
 }

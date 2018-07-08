@@ -28,4 +28,11 @@ public class AllOrdersPage {
 	@FindBy(linkText="Order")
 	public WebElement orderTab;
 	
+	@FindBy(id="ctl00_logout")
+	public WebElement logoutLink;
+	
+	public void logout() {
+		logoutLink.click();
+	}
+
 }

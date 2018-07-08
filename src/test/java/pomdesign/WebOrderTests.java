@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -40,9 +41,12 @@ public class WebOrderTests {
 	@Test(description="Verify labels and tab links are displayed",priority=1)
 	public void labelsVerication() {
 		assertEquals(driver.getTitle(),"Web Orders Login","LoginPage is not displayed. Application is down.");
-		loginPage.userName.sendKeys(userId);
-		loginPage.password.sendKeys(password);
-		loginPage.loginButton.click();
+		/*  loginPage.userName.sendKeys(userId);
+			loginPage.password.sendKeys(password);
+		    loginPage.loginButton.click();
+		*/
+		loginPage.login(userId, password);
+		
 		allOrdersPage = new AllOrdersPage(driver);
 		assertTrue(allOrdersPage.webOrders.isDisplayed(),"Web Orders is not displayed");
 		assertTrue(allOrdersPage.listOfAllOrders.isDisplayed(),"List Of All Orders label is not displayed");
@@ -51,6 +55,11 @@ public class WebOrderTests {
 		assertTrue(allOrdersPage.orderTab.isDisplayed(),"orderTab is not displayed");
 	}
 	
+	//logout after each test
+	@AfterMethod
+	public void logout() {
+		allOrdersPage.logout();
+	}
 	
 	
 }
