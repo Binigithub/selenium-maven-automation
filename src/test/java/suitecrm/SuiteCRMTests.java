@@ -1,5 +1,6 @@
 package suitecrm;
 
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -8,6 +9,8 @@ import suitecrmpages.SuiteCRMHomePage;
 import suitecrmpages.SuiteCRMLoginPage;
 import suitecrmpages.SuiteCRMTaskOverviewPage;
 import static utilities.ConfigReader.*;
+
+import java.time.LocalDateTime;
 
 public class SuiteCRMTests extends TestBase{
 	
@@ -30,6 +33,10 @@ public class SuiteCRMTests extends TestBase{
 	public void createTaskInSuiteCRM() {
 		loginPage.login(getProperty("suitecrm.username"), getProperty("suitecrm.password"));
 		homepage.createNewItem("Create Task");
+		createTaskpage.subject.sendKeys(getProperty("suitecrm.tasksubject"));
+		new Select(createTaskpage.status).selectByVisibleText(getProperty("suitecrm.taskstatus"));
+		createTaskpage.description.sendKeys(getProperty("suitecrm.description") +"-"+ LocalDateTime.now());
+		createTaskpage.save.click();
 		
 	}
 	
